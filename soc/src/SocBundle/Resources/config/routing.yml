@@ -1,0 +1,3 @@
+soc_homepage:
+    path:     /
+    defaults: { _controller: SocBundle:Default:index }
