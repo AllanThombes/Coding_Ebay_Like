@@ -45,11 +45,15 @@ class User extends BaseUser
 
 
     /**
-     * @var array
-     *
-     * @ORM\Column(name="role", type="array")
+     * @ORM\OneToMany(targetEntity="SocBundle\Entity\Product", mappedBy="user", cascade={"remove"})
      */
-    private $role;
+    protected $products;
+
+    // /**
+    //  * @ORM\OneToMany(targetEntity="SocBundle\Entity\RatingSubClass", mappedBy="user", cascade={"remove"})
+    //  */
+    // protected $ratings;
+
 
 
     /**
@@ -110,30 +114,6 @@ class User extends BaseUser
         return $this->lastname;
     }
 
-    // /**
-    //  * Set email
-    //  *
-    //  * @param string $email
-    //  *
-    //  * @return User
-    //  */
-    // public function setEmail($email)
-    // {
-    //     $this->email = $email;
-    //
-    //     return $this;
-    // }
-    //
-    // /**
-    //  * Get email
-    //  *
-    //  * @return string
-    //  */
-    // public function getEmail()
-    // {
-    //     return $this->email;
-    // }
-
     /**
      * Set address
      *
@@ -158,51 +138,67 @@ class User extends BaseUser
         return $this->address;
     }
 
-    // /**
-    //  * Set password
-    //  *
-    //  * @param string $password
-    //  *
-    //  * @return User
-    //  */
-    // public function setPassword($password)
-    // {
-    //     $this->password = $password;
-    //
-    //     return $this;
-    // }
-    //
-    // /**
-    //  * Get password
-    //  *
-    //  * @return string
-    //  */
-    // public function getPassword()
-    // {
-    //     return $this->password;
-    // }
 
     /**
-     * Set role
+     * Set the value of Id
      *
-     * @param array $role
+     * @param int id
      *
-     * @return User
+     * @return self
      */
-    public function setRole($role)
+    public function setId($id)
     {
-        $this->role = $role;
+        $this->id = $id;
 
         return $this;
     }
 
     /**
-     * Get role
+     * Get the value of Products
      *
-     * @return array
+     * @return mixed
      */
-    public function getRole()
+    public function getProducts()
     {
-        return $this->role;
+        return $this->products;
     }
+
+    /**
+     * Set the value of Products
+     *
+     * @param mixed products
+     *
+     * @return self
+     */
+    public function setProducts($products)
+    {
+        $this->products = $products;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of Ratings
+     *
+     * @return mixed
+     */
+    public function getRatings()
+    {
+        return $this->ratings;
+    }
+
+    /**
+     * Set the value of Ratings
+     *
+     * @param mixed ratings
+     *
+     * @return self
+     */
+    public function setRatings($ratings)
+    {
+        $this->ratings = $ratings;
+
+        return $this;
+    }
+
 }

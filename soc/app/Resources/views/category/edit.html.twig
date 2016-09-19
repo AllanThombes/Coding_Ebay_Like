@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1><span class="label label-success">Category edit</span></h1>
+    <form class="" name="category" id="category" method="post">
+        <input type="text" id="category_title" name="category[title]" value="{{ category.title }}" required="required"/>
+        <select id="category_parentCateg" name="category[parentCateg]">
+          <option value=""></option>
+          {% for categ in categories %}
+            {% if (category.parentCateg and categ.id == category.parentCateg.id) %}
+              <option value="{{ categ.id }}" selected="selected">{{ categ.title }}</option>
+            {% else %}
+              <option value="{{ categ.id }}">{{ categ.title }}</option>
+            {% endif %}
+          {% endfor %}
+        </select>
+        <input type="submit" value="Create" />
+    </form>
+
+    <div class="col-sm-offset-2 col-sm-10">
+      <a href="{{ path('category_index') }}"><button type="button" class="btn btn-default alert alert-info">Back to the list</button></a>
+      {{ form_start(delete_form) }}
+          <input type="submit" value="Delete" class="btn btn-default alert alert-danger">
+      {{ form_end(delete_form) }}
+    </div>
+{% endblock %}

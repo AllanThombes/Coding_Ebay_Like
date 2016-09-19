@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1><span class="label label-success">Category</span></h1>
+    <div class="panel panel-default">
+      <table>
+          <tbody class="table table-hover">
+              <tr  scope="row">
+                  <th scope="row">Id</th>
+                  <td>{{ category.id }}</td>
+              </tr>
+              <tr>
+                  <th scope="row">Title: </th>
+                  <td><strong>{{ category.title }}</strong></td>
+              </tr>
+          </tbody>
+      </table>
+    </div>
+    <p class="col-sm-10">
+      <a href="{{ path('category_index') }}"><button type="button" class="btn btn-default alert alert-info btn-lg">Back to the list</button></a>
+      <a href="{{ path('category_edit', { 'id': category.id }) }}"><button type="button" class="btn btn-default alert alert-warning btn-lg">Edit</button></a>
+      {{ form_start(delete_form) }}
+        <input type="submit" value="Delete" class="btn btn-default alert alert-danger btn-lg pull left">
+      {{ form_end(delete_form) }}
+    </p>
+{% endblock %}

@@ -1,3 +1,11 @@
+soc_price:
+    resource: "@SocBundle/Controller/PriceController.php"
+    type:     annotation
+
+soc_category:
+    resource: "@SocBundle/Controller/CategoryController.php"
+    type:     annotation
+
 soc:
     resource: "@SocBundle/Resources/config/routing.yml"
     prefix:   /

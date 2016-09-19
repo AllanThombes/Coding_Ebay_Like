@@ -1,0 +1,42 @@
+{% extends 'SocBundle::layout.html.twig' %}
+
+{% block body %}
+  <h1><span class="label label-success">Users list: </span></h1>
+  <table class="table table-bordered table-striped">
+      <thead>
+          <tr scope="row" class="alert-info">
+              <th>Id</th>
+              <th>Username</th>
+              <th>Email</th>
+              {% if is_granted('ROLE_ADMIN') %}
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Address</th>
+                <th>Actions</th>
+              {% endif %}
+          </tr>
+      </thead>
+      <tbody>
+      {% for user in users %}
+          <tr scope="row">
+              <td><a href="{{ path('user_show', { 'id': user.id }) }}">{{ user.id }}</a></td>
+              <td>{{ user.username }}</td>
+              <td>{{ user.email }}</td>
+              {% if is_granted('ROLE_ADMIN') %}
+              <td>{{ user.firstname }}</td>
+              <td>{{ user.lastname }}</td>
+              <td>{{ user.address }}</td>
+              <td>
+                  <a href="{{ path('user_show', { 'id': user.id }) }}"><button type="btn btn-default" class="btn btn-primary alert alert-success" name="button">Show</button></a>
+                  <a href="{{ path('user_edit', { 'id': user.id }) }}"><button type="btn btn-default" class="btn btn-primary alert alert-warning" name="button">Edit</button></a>
+                  <a href="{{ path('user_admin', { 'id': user.id }) }}"><button type="btn btn-default" class="btn btn-primary alert alert-info" name="button">Grant Admin</button></a>
+              </td>
+              {% endif %}
+          </tr>
+      {% endfor %}
+      </tbody>
+  </table>
+  {% if is_granted('ROLE_ADMIN') %}
+    <a href="/register"><button type="btn btn-default" class="btn btn-primary alert alert-success" name="button">Create</button></a>
+  {% endif %}
+{% endblock %}

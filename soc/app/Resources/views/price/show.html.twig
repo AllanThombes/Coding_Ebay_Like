@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Price</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ price.id }}</td>
+            </tr>
+            <tr>
+                <th>Actualprice</th>
+                <td>{{ price.actualPrice }}</td>
+            </tr>
+            <tr>
+                <th>Immediateprice</th>
+                <td>{{ price.immediatePrice }}</td>
+            </tr>
+            <tr>
+                <th>Startingprice</th>
+                <td>{{ price.startingPrice }}</td>
+            </tr>
+            <tr>
+                <th>Minbid</th>
+                <td>{{ price.minBid }}</td>
+            </tr>
+            <tr>
+                <th>Status</th>
+                <td>{{ price.status }}</td>
+            </tr>
+            <tr>
+                <th>Enddate</th>
+                <td>{% if price.endDate %}{{ price.endDate|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('price_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('price_edit', { 'id': price.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

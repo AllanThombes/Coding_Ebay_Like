@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1><span class="label label-success">Category list</span></h1>
+
+    <table  class="table table-bordered table-striped">
+        <thead>
+            <tr scope="row" class="alert-info">
+                <th>Id</th>
+                <th>Title</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for category in categories %}
+            <tr scope="row">
+                <td class="col-md-1"><a href="{{ path('category_show', { 'id': category.id }) }}">{{ category.id }}</a></td>
+                <td class="col-md-5">{{ category.title }}</td>
+                <td class="col-md-2">
+                    <a href="{{ path('category_show', { 'id': category.id }) }}"><button type="btn btn-default" class="btn btn-primary alert alert-success" name="button">Show</button></a>
+                    <a href="{{ path('category_edit', { 'id': category.id }) }}"><button type="btn btn-default" class="btn btn-primary alert alert-warning" name="button">Edit</button></a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <a href="{{ path('category_new') }}"><button type="btn btn-default" class="btn btn-primary alert alert-success" name="button">New</button></a>
+{% endblock %}

@@ -1,0 +1,63 @@
+{% extends 'SocBundle::layout.html.twig' %}
+
+{% block body %}
+    <h1><span class="label label-success">User</span></h1>
+    <div class="col-lg-12">
+    <table class="col-lg-12">
+        <tbody class="table table-hover col-lg-12">
+            <tr  scope="row">
+                <th>Id: </th>
+                <td>{{ user.id }}</td>
+            </tr>
+            <tr>
+                <th scope="row">Username: </th>
+                <td>{{ user.username }}</td>
+            </tr>
+            <tr>
+                <th scope="row">Email: </th>
+                <td>{{ user.email }}</td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
+
+        {% if products %}
+        <div class="">
+          <table class="table table-bordered table-striped">
+              <thead>
+                <h2><th scope="row" class="label label-success">Products</th></h2>
+                  <tr scope="row" class="alert-info">
+                      <th>Id</th>
+                      <th>Title</th>
+                      <th>Description</th>
+                      <th>Price <span class="glyphicon glyphicon-usd"></span></th>
+                  </tr>
+              </thead>
+              <tbody>
+          {% for product in products %}
+            <tr>
+                <td><a href="{{ path('product_show', { 'id': product.id }) }}">{{ product.id }}</a></td>
+                <td>{{ product.title }}</td>
+                <td>{{ product.description }}</td>
+                <td>{{ product.price }}</td>
+            </tr>
+          {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        {% endif %}
+
+
+    <p class="col-sm-10">
+      <a href="{{ path('soc_users') }}"><button type="button" class="btn btn-default alert alert-info btn-lg">Back to the list</button></a>
+      {% if is_granted('ROLE_ADMIN') %}
+        <a href="{{ path('user_edit', { 'id': user.id }) }}"><button type="btn btn-default" class="btn btn-default alert alert-warning  btn-lg" name="button">Edit</button></a>
+      {% else %}
+          <a href="{{ path('fos_user_profile_edit') }}"><button type="btn btn-default" class="btn btn-default alert alert-warning  btn-lg" name="button">Edit</button></a>
+      {% endif %}
+      {{ form_start(delete_form) }}
+          <input type="submit" value="Delete" class="btn btn-default alert alert-danger btn-lg pull left">
+      {{ form_end(delete_form) }}
+    </p>
+
+{% endblock %}

@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Price list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Actualprice</th>
+                <th>Immediateprice</th>
+                <th>Startingprice</th>
+                <th>Minbid</th>
+                <th>Status</th>
+                <th>Enddate</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for price in prices %}
+            <tr>
+                <td><a href="{{ path('price_show', { 'id': price.id }) }}">{{ price.id }}</a></td>
+                <td>{{ price.actualPrice }}</td>
+                <td>{{ price.immediatePrice }}</td>
+                <td>{{ price.startingPrice }}</td>
+                <td>{{ price.minBid }}</td>
+                <td>{{ price.status }}</td>
+                <td>{% if price.endDate %}{{ price.endDate|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('price_show', { 'id': price.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('price_edit', { 'id': price.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('price_new') }}">Create a new entry</a>
+        </li>
+    </ul>
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<h1><span class="label label-success">Category creation</span></h1>
+
+<form class="" name="category" id="category" method="post">
+    <input type="text" id="category_title" name="category[title]" required="required"/>
+    <select id="category_parentCateg" name="category[parentCateg]">
+      <option value=""></option>
+      {% for categ in categories %}
+        <option value="{{ categ.id }}">{{ categ.title }}</option>
+      {% endfor %}
+    </select>
+    <input type="submit" value="Create" />
+</form>
+
+    <ul>
+        <li>
+            <a href="{{ path('category_index') }}">Back to the list</a>
+        </li>
+    </ul>
+{% endblock %}

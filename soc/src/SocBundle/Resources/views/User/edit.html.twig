@@ -1,0 +1,20 @@
+{% extends 'SocBundle::layout.html.twig' %}
+
+{% block body %}
+    <h1><span class="label label-success">User edit</span></h1>
+    {% form_theme edit_form 'bootstrap_3_horizontal_layout.html.twig' %}
+    {{ form_start(edit_form) }}
+        {{ form_widget(edit_form) }}
+        <div class="col-sm-offset-2 col-sm-10">
+          <input type="submit" value="Edit" class="btn btn-default alert alert-success"/><br><br>
+        </div>
+    {{ form_end(edit_form) }}
+
+    <div class="col-sm-offset-2 col-sm-10">
+    <a href="{{ path('soc_users') }}"><button type="button" class="btn btn-default alert alert-info">Back to the list</button></a><br><br>
+    {{ form_start(delete_form) }}
+        <input type="submit" value="Delete" class="btn btn-default alert alert-danger">
+    {{ form_end(delete_form) }}
+      </div>
+
+{% endblock %}

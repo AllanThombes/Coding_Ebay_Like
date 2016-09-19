@@ -1,3 +1,36 @@
+soc_product:
+    resource: "@SocBundle/Resources/config/routing/product.yml"
+    prefix:   /product
+
 soc_homepage:
     path:     /
     defaults: { _controller: SocBundle:Default:index }
+
+soc_users:
+    path:     /users
+    defaults: { _controller: SocBundle:User:users }
+
+user_show:
+    path:     /user/{id}/show
+    defaults: { _controller: "SocBundle:User:show" }
+    methods:  [GET, POST]
+
+user_new:
+    path:     /user/new
+    defaults: { _controller: "SocBundle:User:new" }
+    methods:  [GET, POST]
+
+user_edit:
+    path:     /user/{id}/edit
+    defaults: { _controller: "SocBundle:User:edit" }
+    methods:  [GET, POST]
+
+user_delete:
+    path:     /user/{id}/delete
+    defaults: { _controller: "SocBundle:User:delete" }
+    methods:  DELETE
+
+user_admin:
+    path:     /user/{id}/admin
+    defaults: { _controller: "SocBundle:User:admin" }
+    methods:  [GET, POST]
