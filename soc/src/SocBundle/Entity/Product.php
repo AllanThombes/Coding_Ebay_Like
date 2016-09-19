@@ -36,10 +36,17 @@ class Product
     private $description;
 
     /**
-     * @ORM\OneToOne(targetEntity="SocBundle\Entity\Price", cascade={"persist"})
-     * @ORM\JoinColumn(nullable=false)
+     * @var string
+     *
+     * @ORM\Column(name="price", type="decimal", precision=10, scale=2)
      */
     private $price;
+
+    /**
+     * @ORM\OneToOne(targetEntity="SocBundle\Entity\Price", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=true)
+     */
+     private $bid;
 
     /**
      * @ORM\ManyToOne(targetEntity="SocBundle\Entity\User", inversedBy="products")

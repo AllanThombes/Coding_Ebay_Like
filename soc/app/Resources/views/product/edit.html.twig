@@ -5,6 +5,16 @@
     {% form_theme edit_form 'bootstrap_3_horizontal_layout.html.twig' %}
     {{ form_start(edit_form) }}
         {{ form_widget(edit_form) }}
+        <select id="category_parentCateg" name="category[parentCateg]">
+          <option value=""></option>
+          {% for categ in categories %}
+            {% if (categ.id == product.category.id) %}
+              <option value="{{ categ.id }}" selected="selected">{{ categ.title }}</option>
+            {% else %}
+              <option value="{{ categ.id }}">{{ categ.title }}</option>
+            {% endif %}
+          {% endfor %}
+        </select>
         <div class="col-sm-offset-2 col-sm-10">
           <input type="submit" value="Edit" class="btn btn-default alert alert-success"/><br><br>
         </div>

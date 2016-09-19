@@ -6,22 +6,24 @@
     <table class="table table-bordered table-striped">
         <thead>
             <tr scope="row" class="alert-info">
-                <th>Id</th>
-                <th>Title</th>
-                <th>Description</th>
+                <th>Id  <span class="glyphicon glyphicon-search"></span></th>
+                <th>Title <span class="glyphicon glyphicon-tags"></span></th>
+                <th>Description  <span class="glyphicon glyphicon-th-list"></span></th>
                 <th>Price <span class="glyphicon glyphicon-usd"></span></th>
                 <th>Seller <span class="glyphicon glyphicon-user"></span></th>
+                <th>Category <span class="glyphicon glyphicon-list-alt"></span></th>
                 <th>Actions <span class="glyphicon glyphicon-pencil"></span></th>
             </tr>
         </thead>
         <tbody>
         {% for product in products %}
             <tr scope="row">
-                <td><a href="{{ path('product_show', { 'id': product.id }) }}">{{ product.id }}</a></td>
-                <td>{{ product.title }}</td>
+                <td class="col-md-1"><a href="{{ path('product_show', { 'id': product.id }) }}">{{ product.id }}</a></td>
+                <td class="col-md-2">{{ product.title }}</td>
                 <td>{{ product.description }}</td>
                 <td>{{ product.price }}</td>
                 <td class="col-md-2">{{ product.user.username }}</td>
+                <td class="col-md-2">{{ product.category.title }}</td>
                 <td>
                   <a href="{{ path('product_show', { 'id': product.id }) }}"><button type="btn btn-default" class="btn btn-primary alert alert-success" name="button">Show</button></a>
                   <a href="{{ path('product_edit', { 'id': product.id }) }}"><button type="btn btn-default" class="btn btn-primary alert alert-warning" name="button">Edit</button></a>

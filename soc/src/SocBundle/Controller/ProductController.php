@@ -43,10 +43,13 @@ class ProductController extends Controller
         $product = new Product();
         $form = $this->createForm('SocBundle\Form\ProductType', $product);
         $form->handleRequest($request);
+        $em = $this->getDoctrine()->getManager();
+        $categories = $em->getRepository('SocBundle:Category')->findAll();
 
         if ($form->isSubmitted() && $form->isValid()) {
             $user = $this->container->get('security.token_storage')->getToken()->getUser();
             $product->setUser($user);
+            $product->setCategory($em->getRepository('SocBundle:Category')->find(intval ($_POST['category']['parentCateg'][0])));
             $em = $this->getDoctrine()->getManager();
             $em->persist($product);
             $em->flush();
@@ -56,6 +59,7 @@ class ProductController extends Controller
 
         return $this->render('product/new.html.twig', array(
             'product' => $product,
+            'categories' => $categories,
             'form' => $form->createView(),
         ));
     }
@@ -88,8 +92,11 @@ class ProductController extends Controller
         $deleteForm = $this->createDeleteForm($product);
         $editForm = $this->createForm('SocBundle\Form\ProductType', $product);
         $editForm->handleRequest($request);
+        $em = $this->getDoctrine()->getManager();
+        $categories = $em->getRepository('SocBundle:Category')->findAll();
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
+            $product->setCategory($em->getRepository('SocBundle:Category')->find(intval ($_POST['category']['parentCateg'][0])));
             $em = $this->getDoctrine()->getManager();
             $em->persist($product);
             $em->flush();
@@ -99,6 +106,7 @@ class ProductController extends Controller
 
         return $this->render('product/edit.html.twig', array(
             'product' => $product,
+            'categories' => $categories,
             'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         ));

@@ -5,6 +5,11 @@
     {% form_theme form 'bootstrap_3_horizontal_layout.html.twig' %}
     {{ form_start(form) }}
         {{ form_widget(form) }}
+        <select id="category_parentCateg" name="category[parentCateg]" required="required">
+          {% for categ in categories %}
+            <option value="{{ categ.id }}">{{ categ.title }}</option>
+          {% endfor %}
+        </select>
         <input type="submit" value="Create" />
     {{ form_end(form) }}
 
