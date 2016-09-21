@@ -110,9 +110,12 @@ class CategoryController extends Controller
      */
     public function editAction(Request $request, Category $category)
     {
+      $user = $this->getUser();
+      if (!$user->hasRole('ROLE_ADMIN') ) {
+          throw new AccessDeniedException("Only admins can edit categories!");
+      }
         $deleteForm = $this->createDeleteForm($category);
-        // $editForm = $this->createForm('SocBundle\Form\CategoryType', $category);
-        // $editForm->handleRequest($request);
+
         $em = $this->getDoctrine()->getManager();
         $categories = $em->getRepository('SocBundle:Category')->findAll();
 
@@ -143,6 +146,10 @@ class CategoryController extends Controller
      */
     public function deleteAction(Request $request, Category $category)
     {
+      $user = $this->getUser();
+      if (!$user->hasRole('ROLE_ADMIN') ) {
+          throw new AccessDeniedException("Only admins can delete categories!");
+      }
         $form = $this->createDeleteForm($category);
         $form->handleRequest($request);
 

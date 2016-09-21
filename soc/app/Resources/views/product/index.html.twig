@@ -26,7 +26,9 @@
                 <td class="col-md-2"><a href="{{ path('category_show', { 'id': product.category.id }) }}">{{ product.category.title }}</a></td>
                 <td>
                   <a href="{{ path('product_show', { 'id': product.id }) }}"><button type="btn btn-default" class="btn btn-primary alert alert-success" name="button">Show</button></a>
-                  <a href="{{ path('product_edit', { 'id': product.id }) }}"><button type="btn btn-default" class="btn btn-primary alert alert-warning" name="button">Edit</button></a>
+                  {% if app.user == product.user or is_granted('ROLE_ADMIN') %}
+                    <a href="{{ path('product_edit', { 'id': product.id }) }}"><button type="btn btn-default" class="btn btn-primary alert alert-warning" name="button">Edit</button></a>
+                  {% endif %}
                 </td>
             </tr>
         {% endfor %}

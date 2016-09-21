@@ -32,10 +32,12 @@
 
     <p class="col-sm-10">
       <a href="{{ path('product_index') }}"><button type="button" class="btn btn-default alert alert-info btn-lg">Back to the list</button></a>
-      <a href="{{ path('product_edit', { 'id': product.id }) }}"><button type="button" class="btn btn-default alert alert-warning btn-lg">Edit</button></a>
+      {% if app.user == product.user or is_granted('ROLE_ADMIN') %}
+        <a href="{{ path('product_edit', { 'id': product.id }) }}"><button type="button" class="btn btn-default alert alert-warning btn-lg">Edit</button></a>
       {{ form_start(delete_form) }}
           <input type="submit" value="Delete" class="btn btn-default alert alert-danger btn-lg pull left">
       {{ form_end(delete_form) }}
+    {% endif %}
     </p>
 
 {% endblock %}
