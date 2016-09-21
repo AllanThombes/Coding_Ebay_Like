@@ -20,6 +20,12 @@ fos_user:
         form:
             type: SocBundle\Form\ProfileType
 
+assetic:
+    debug:          '%kernel.debug%'
+    use_controller: '%kernel.debug%'
+    filters:
+        cssrewrite: ~
+
 framework:
     #esi:             ~
     translator: ~

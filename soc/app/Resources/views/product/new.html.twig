@@ -5,17 +5,59 @@
     {% form_theme form 'bootstrap_3_horizontal_layout.html.twig' %}
     {{ form_start(form) }}
         {{ form_widget(form) }}
-        <select id="category_parentCateg" name="category[parentCateg]" required="required">
+        <!-- <select id="category_parentCateg" name="category[parentCateg]" required="required">
           {% for categ in categories %}
             <option value="{{ categ.id }}">{{ categ.title }}</option>
           {% endfor %}
-        </select>
+        </select> -->
+        <label for="category">Category: </label>
+        <input  id ='category' name="parentCateg"/><br>
         <input type="submit" value="Create" />
     {{ form_end(form) }}
-
+    <p>
     <ul class="list-group">
         <li class="list-group-item">
             <a href="{{ path('product_index') }}">Back to the list</a>
         </li>
     </ul>
+    </p>
+ <script type="text/javascript">
+ var cache = {};
+ $(document).ready(function(){
+ 	$("#category").autocomplete({
+ 		source: function (request, response)
+    {
+
+      $.ajax({
+        url: "json/categories",
+        dataType: "json",
+        data : "data=" + request.term,
+        type: 'POST',
+        success: function (data)
+        {
+          response($.map(data, function (item)
+          {
+            return {
+              label: item.category,
+              value: function ()
+              {
+                console.log(item);
+                return item.category;
+              }
+            };
+          }));
+        },
+        error: function (jqXHR, textStatus, errorThrown)
+        {
+          console.log(jqXHR);
+          console.log(textStatus);
+          console.log(errorThrown);
+        }
+      });
+    },
+    minLength: 1,
+    delay: 300
+  });
+});
+   </script>
 {% endblock %}

@@ -34,3 +34,8 @@ user_admin:
     path:     /user/{id}/admin
     defaults: { _controller: "SocBundle:User:admin" }
     methods:  [GET, POST]
+
+json_categ:
+    path:     /product/json/categories
+    defaults: { _controller: "SocBundle:Json:categories"}
+    methods:  [POST]

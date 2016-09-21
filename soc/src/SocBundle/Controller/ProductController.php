@@ -49,7 +49,9 @@ class ProductController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $user = $this->container->get('security.token_storage')->getToken()->getUser();
             $product->setUser($user);
-            $product->setCategory($em->getRepository('SocBundle:Category')->find(intval ($_POST['category']['parentCateg'][0])));
+            var_dump($_POST['category']['parentCateg']);
+            $categ = $em->getRepository('SocBundle:Category')->findByTitle($_POST['category']['parentCateg']);
+            $product->setCategory($categ[0]);
             $em = $this->getDoctrine()->getManager();
             $em->persist($product);
             $em->flush();
@@ -96,7 +98,7 @@ class ProductController extends Controller
         $categories = $em->getRepository('SocBundle:Category')->findAll();
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
-            $product->setCategory($em->getRepository('SocBundle:Category')->find(intval ($_POST['category']['parentCateg'][0])));
+            $product->setCategory($em->getRepository('SocBundle:Category')->find((int)$_POST['category']['parentCateg']));
             $em = $this->getDoctrine()->getManager();
             $em->persist($product);
             $em->flush();

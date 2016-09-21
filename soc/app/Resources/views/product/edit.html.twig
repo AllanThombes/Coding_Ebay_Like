@@ -6,7 +6,6 @@
     {{ form_start(edit_form) }}
         {{ form_widget(edit_form) }}
         <select id="category_parentCateg" name="category[parentCateg]">
-          <option value=""></option>
           {% for categ in categories %}
             {% if (categ.id == product.category.id) %}
               <option value="{{ categ.id }}" selected="selected">{{ categ.title }}</option>

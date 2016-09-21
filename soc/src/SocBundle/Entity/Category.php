@@ -29,13 +29,13 @@ class Category
     private $title;
 
     /**
-     * @ORM\ManyToOne(targetEntity="SocBundle\Entity\Category", inversedBy="childCateg")
+     * @ORM\ManyToOne(targetEntity="SocBundle\Entity\Category")
      * @ORM\JoinColumn(name="parent_categ", nullable=true)
      */
     protected $parentCateg;
 
     /**
-     * @ORM\OneToMany(targetEntity="SocBundle\Entity\Product", mappedBy="category")
+     * @ORM\OneToMany(targetEntity="SocBundle\Entity\Product", mappedBy="category", cascade={"remove"})
      */
     protected $products;
 
