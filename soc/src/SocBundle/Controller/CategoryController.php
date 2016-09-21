@@ -64,6 +64,24 @@ class CategoryController extends Controller
     }
 
     /**
+    * Find products of a category and sub-categories
+    */
+    public function getAllProducts($category, $manager, $products) {
+      //first we get the category's products
+      $categProducts = $manager->getRepository('SocBundle:Product')->findByCategory($category);
+      foreach ($categProducts as $prod) {
+        array_push($products, $prod);
+      }
+
+      // then we get each child category's products
+      $categChilds = $manager->getRepository('SocBundle:Category')->findByParentCateg($category);
+      foreach ($categChilds as $key => $value) {
+        $products = $this->getAllProducts($value, $manager, $products);
+      }
+      return $products;
+    }
+
+    /**
      * Finds and displays a Category entity.
      *
      * @Route("/{id}", name="category_show")
@@ -72,9 +90,14 @@ class CategoryController extends Controller
     public function showAction(Category $category)
     {
         $deleteForm = $this->createDeleteForm($category);
+        $em = $this->getDoctrine()->getManager();
+        // $categProducts = $em->getRepository('SocBundle:Product')->findByCategory($category);
+        $products = [];
+        $products = $this->getAllProducts($category, $em, $products);
 
         return $this->render('category/show.html.twig', array(
             'category' => $category,
+            'products' => $products,
             'delete_form' => $deleteForm->createView(),
         ));
     }

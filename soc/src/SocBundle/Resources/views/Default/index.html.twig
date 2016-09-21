@@ -1,1 +1,59 @@
 {% extends 'SocBundle::layout.html.twig' %}
+
+{% block body %}
+<div class="container-fluid">
+  <div class="panel panel-default col-sm-2">
+    <div class="panel-heading">Categories</div>
+    <div class="panel-body">
+      <ul class="list-group">
+          {% for category in categories %}
+            <li class="list-group-item"><a href="{{ path('category_show', { 'id': category.id }) }}">{{ category.title }} </a><span class="badge">{{ category.products.count }}</span></li></li>
+          {% endfor %}
+      </ul>
+    </div>
+  </div>
+  <div class="col-sm-2"></div>
+  <div id="myCarousel" class="carousel slide col-sm-8" data-ride="carousel">
+  <!-- Indicators -->
+  <ol class="carousel-indicators">
+    <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+    <li data-target="#myCarousel" data-slide-to="1"></li>
+    <li data-target="#myCarousel" data-slide-to="2"></li>
+    <li data-target="#myCarousel" data-slide-to="3"></li>
+  </ol>
+
+  <!-- Wrapper for slides -->
+  <div class="carousel-inner" role="listbox">
+    <div class="item active">
+      <div class="col-sm-3"></div>
+        <h2><span class="label label-success text-center-lg">Today and today only we made discount on all sports products</span></h2>
+    </div>
+
+    <div class="item">
+      <div class="col-sm-2"></div>
+      <h2><span class="label label-warning text-center-lg">All sports products are out-of stocks</span></h2>
+    </div>
+
+    <div class="item">
+      <div class="col-sm-4"></div>
+      <h2><span class="label label-danger text-center-lg">Ïa Ïa Cthulhu Phtagn!</span></h2>
+    </div>
+
+    <div class="item text-center-lg">
+      <div class="col-sm-3"></div>
+      <h2><span class="label label-info text-center-lg">Give me <mark>17</mark> for this awesome work</span></h2>
+    </div>
+  </div>
+
+  <!-- Left and right controls -->
+  <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+    <span class="sr-only">Previous</span>
+  </a>
+  <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+    <span class="sr-only">Next</span>
+  </a>
+</div>
+</div>
+{% endblock %}

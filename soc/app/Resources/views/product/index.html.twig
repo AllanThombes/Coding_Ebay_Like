@@ -23,7 +23,7 @@
                 <td>{{ product.description }}</td>
                 <td>{{ product.price }}</td>
                 <td class="col-md-2">{{ product.user.username }}</td>
-                <td class="col-md-2">{{ product.category.title }}</td>
+                <td class="col-md-2"><a href="{{ path('category_show', { 'id': product.category.id }) }}">{{ product.category.title }}</a></td>
                 <td>
                   <a href="{{ path('product_show', { 'id': product.id }) }}"><button type="btn btn-default" class="btn btn-primary alert alert-success" name="button">Show</button></a>
                   <a href="{{ path('product_edit', { 'id': product.id }) }}"><button type="btn btn-default" class="btn btn-primary alert alert-warning" name="button">Edit</button></a>

@@ -23,7 +23,7 @@
             </tr>
             <tr>
                 <th scope="row">Category</th>
-                <td>{{ product.category.title }}</td>
+                <td><a href="{{ path('category_show', { 'id': product.category.id }) }}">{{ product.category.title }}</a></td>
             </tr>
         </tbody>
     </table>
