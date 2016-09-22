@@ -22,6 +22,12 @@ class Price
     private $id;
 
     /**
+     * @ORM\OneToOne(targetEntity="SocBundle\Entity\Product", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=false)
+     */
+     private $product;
+
+    /**
      * @var float
      *
      * @ORM\Column(name="actualPrice", type="float")
@@ -52,7 +58,7 @@ class Price
     /**
      * @var string
      *
-     * @ORM\Column(name="status", type="string", length=255)
+     * @ORM\Column(name="status", type="string", length=255, nullable=true)
      */
     private $status;
 
@@ -218,4 +224,3 @@ class Price
         return $this->endDate;
     }
 }
-

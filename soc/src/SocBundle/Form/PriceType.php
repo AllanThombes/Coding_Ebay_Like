@@ -5,6 +5,7 @@ namespace SocBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 
 class PriceType extends AbstractType
 {
@@ -19,11 +20,10 @@ class PriceType extends AbstractType
             ->add('immediatePrice')
             ->add('startingPrice')
             ->add('minBid')
-            ->add('status')
-            ->add('endDate', 'datetime')
-        ;
+            // ->add('endDate', 'datetime')
+            ->add('endDate', DateTimeType::class, array('date_widget' => "single_text", 'time_widget' => "single_text"));
     }
-    
+
     /**
      * @param OptionsResolver $resolver
      */

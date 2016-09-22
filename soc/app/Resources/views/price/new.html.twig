@@ -2,7 +2,7 @@
 
 {% block body %}
     <h1>Price creation</h1>
-
+    {% form_theme form 'bootstrap_3_horizontal_layout.html.twig' %}
     {{ form_start(form) }}
         {{ form_widget(form) }}
         <input type="submit" value="Create" />
@@ -13,4 +13,23 @@
             <a href="{{ path('price_index') }}">Back to the list</a>
         </li>
     </ul>
+    <script type="text/javascript">
+  //     $(function(){
+  //   $("#form input").each(function(){
+  //       $(this).attr("readonly","readonly");
+  //   });
+  //
+  //   $('#price_endDate_date').datetimepicker({
+  //       format: "yyyy-mm-dd",
+  //       timepicker: false,
+  //       datepicker: true,
+  //   });
+  //   $('#price_endDate_time').datetimepicker({
+  //       format: "H:i",
+  //       timepicker: true,
+  //       datepicker: false,
+  //       step:5
+  //   });
+  // });
+    </script>
 {% endblock %}
