@@ -3,6 +3,7 @@
 namespace SocBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Product
@@ -39,6 +40,10 @@ class Product
      * @var string
      *
      * @ORM\Column(name="price", type="decimal", precision=10, scale=2)
+     * @Assert\Range(
+     *      min = 0.01,
+     *      minMessage = "Price can't be null"
+     * )
      */
     private $price;
 
@@ -59,6 +64,11 @@ class Product
      * @ORM\JoinColumn(name="categ_id", nullable=false)
      */
     protected $category;
+
+    /**
+     * @ORM\OneToMany(targetEntity="SocBundle\Entity\Rating", mappedBy="productRated", cascade={"remove"})
+     */
+    protected $rated;
 
     /**
      * Get id
@@ -205,5 +215,54 @@ class Product
         return $this;
     }
 
+
+
+    /**
+     * Get the value of Bid
+     *
+     * @return mixed
+     */
+    public function getBid()
+    {
+        return $this->bid;
+    }
+
+    /**
+     * Set the value of Bid
+     *
+     * @param mixed bid
+     *
+     * @return self
+     */
+    public function setBid($bid)
+    {
+        $this->bid = $bid;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of Rated
+     *
+     * @return mixed
+     */
+    public function getRated()
+    {
+        return $this->rated;
+    }
+
+    /**
+     * Set the value of Rated
+     *
+     * @param mixed rated
+     *
+     * @return self
+     */
+    public function setRated($rated)
+    {
+        $this->rated = $rated;
+
+        return $this;
+    }
 
 }

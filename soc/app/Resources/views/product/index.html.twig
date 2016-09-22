@@ -13,6 +13,7 @@
                 <th>Seller <span class="glyphicon glyphicon-user"></span></th>
                 <th>Category <span class="glyphicon glyphicon-list-alt"></span></th>
                 <th>Actions <span class="glyphicon glyphicon-pencil"></span></th>
+                <th>Rate <span class="glyphicon glyphicon-heart"></span></th>
             </tr>
         </thead>
         <tbody>
@@ -30,6 +31,7 @@
                     <a href="{{ path('product_edit', { 'id': product.id }) }}"><button type="btn btn-default" class="btn btn-primary alert alert-warning" name="button">Edit</button></a>
                   {% endif %}
                 </td>
+                <td class="col-md-1">{{product.rated.count}}</td>
             </tr>
         {% endfor %}
         </tbody>

@@ -1,3 +1,7 @@
+# soc_rating:
+#     resource: "@SocBundle/Controller/RatingController.php"
+#     type:     annotation
+
 soc_price:
     resource: "@SocBundle/Controller/PriceController.php"
     type:     annotation

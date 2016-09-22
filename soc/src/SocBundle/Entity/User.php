@@ -49,10 +49,15 @@ class User extends BaseUser
      */
     protected $products;
 
-    // /**
-    //  * @ORM\OneToMany(targetEntity="SocBundle\Entity\RatingSubClass", mappedBy="user", cascade={"remove"})
-    //  */
-    // protected $ratings;
+    /**
+     * @ORM\OneToMany(targetEntity="SocBundle\Entity\Rating", mappedBy="rater", cascade={"remove"})
+     */
+    protected $ratings;
+
+    /**
+     * @ORM\OneToMany(targetEntity="SocBundle\Entity\Rating", mappedBy="userRated", cascade={"remove"})
+     */
+    protected $rated;
 
 
 
@@ -197,6 +202,31 @@ class User extends BaseUser
     public function setRatings($ratings)
     {
         $this->ratings = $ratings;
+
+        return $this;
+    }
+
+
+    /**
+     * Get the value of Rated
+     *
+     * @return mixed
+     */
+    public function getRated()
+    {
+        return $this->rated;
+    }
+
+    /**
+     * Set the value of Rated
+     *
+     * @param mixed rated
+     *
+     * @return self
+     */
+    public function setRated($rated)
+    {
+        $this->rated = $rated;
 
         return $this;
     }

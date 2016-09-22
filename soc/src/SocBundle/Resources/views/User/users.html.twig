@@ -20,8 +20,8 @@
       {% for user in users %}
           <tr scope="row">
               <td><a href="{{ path('user_show', { 'id': user.id }) }}">{{ user.id }}</a></td>
-              <td>{{ user.username }}</td>
-              <td>{{ user.email }}</td>
+              <td><a href="{{ path('user_show', { 'id': user.id }) }}">{{ user.username }}</a></td>
+              <td><a href="{{ path('user_show', { 'id': user.id }) }}">{{ user.email }}</a></td>
               {% if is_granted('ROLE_ADMIN') %}
               <td>{{ user.firstname }}</td>
               <td>{{ user.lastname }}</td>

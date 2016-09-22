@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Rating</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Rater: </th>
+                <td>{{ rating.rater.username }}</td>
+            </tr>
+            <tr>
+                <th>Note: </th>
+                <td>{% for i in 1..rating.rate %}
+                  <span class="glyphicon glyphicon-star"></span>
+                {% endfor %}
+                {% for i in rating.rate..4 %}
+                  <span class="glyphicon glyphicon-star-empty"></span>
+                {% endfor %}</td></td>
+            </tr>
+            <tr>
+                <th>Comment: </th>
+                <td>{{ rating.comment }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('rating_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('rating_edit', { 'id': rating.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

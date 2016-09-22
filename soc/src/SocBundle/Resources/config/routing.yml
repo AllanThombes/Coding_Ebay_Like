@@ -39,3 +39,8 @@ json_categ:
     path:     /product/json/categories
     defaults: { _controller: "SocBundle:Json:categories"}
     methods:  [POST]
+
+rating_new:
+    path:     /rating/{id}/{type}/new
+    defaults: { _controller: "SocBundle:Rating:new" }
+    methods:  [GET, POST]

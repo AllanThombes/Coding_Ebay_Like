@@ -27,10 +27,39 @@
             </tr>
         </tbody>
     </table>
-
     </div>
+    <table>
+        <tbody>
+          {% for rating in product.rated %}
+            <tr>
+                <th>Rater: </th>
+                <td>{{ rating.rater.username }}</td>
+            </tr>
+            <tr>
+                <th>Note: </th>
+                <td>{% for i in 1..rating.rate %}
+                  <span class="glyphicon glyphicon-star"></span>
+                {% endfor %}
+                {% if rating.rate < 5 %}
+                  {% for i in 1..(5 - rating.rate) %}
+                    <span class="glyphicon glyphicon-star-empty"></span>
+                  {% endfor %}</td></td>
+                {% endif %}
+            </tr>
+            <tr>
+                <th>Comment: </th>
+                <td>{{ rating.comment }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 
     <p class="col-sm-10">
+      {% if app.user != product.user %}
+      <tr>
+        <td><a href="{{ path('rating_new',{ 'id': product.id, 'type': 'product' })  }}"><button type="button" class="btn btn-default alert alert-info btn-lg">Rate this product</button></a></td>
+      </tr>
+      {% endif %}
       <a href="{{ path('product_index') }}"><button type="button" class="btn btn-default alert alert-info btn-lg">Back to the list</button></a>
       {% if app.user == product.user or is_granted('ROLE_ADMIN') %}
         <a href="{{ path('product_edit', { 'id': product.id }) }}"><button type="button" class="btn btn-default alert alert-warning btn-lg">Edit</button></a>

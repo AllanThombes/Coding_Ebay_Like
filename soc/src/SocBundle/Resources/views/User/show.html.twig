@@ -17,9 +17,39 @@
                 <th scope="row">Email: </th>
                 <td>{{ user.email }}</td>
             </tr>
+            {% if app.user != user %}
+            <tr>
+              <td><a href="{{ path('rating_new',{ 'id': user.id, 'type': 'user' })  }}"><button type="button" class="btn btn-default alert alert-info btn-lg">Rate this user</button></a></td>
+            </tr>
+            {% endif %}
         </tbody>
     </table>
     </div>
+    <table>
+        <tbody>
+          {% for rating in user.rated %}
+            <tr>
+                <th>Rater: </th>
+                <td>{{ rating.rater.username }}</td>
+            </tr>
+            <tr>
+                <th>Note: </th>
+                <td>{% for i in 1..rating.rate %}
+                  <span class="glyphicon glyphicon-star"></span>
+                {% endfor %}
+                {% if rating.rate < 5 %}
+                  {% for i in 1..(5 - rating.rate) %}
+                    <span class="glyphicon glyphicon-star-empty"></span>
+                  {% endfor %}</td></td>
+                {% endif %}
+            </tr>
+            <tr>
+                <th>Comment: </th>
+                <td>{{ rating.comment }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 
         {% if products %}
         <div class="">
@@ -37,7 +67,7 @@
           {% for product in products %}
             <tr>
                 <td><a href="{{ path('product_show', { 'id': product.id }) }}">{{ product.id }}</a></td>
-                <td>{{ product.title }}</td>
+                <td><a href="{{ path('product_show', { 'id': product.id }) }}">{{ product.title }}</a></td>
                 <td>{{ product.description }}</td>
                 <td>{{ product.price }}</td>
             </tr>
