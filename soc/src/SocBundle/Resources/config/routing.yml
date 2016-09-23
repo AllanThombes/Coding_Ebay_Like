@@ -49,3 +49,13 @@ price_new:
     path:     /price/{id}/new
     defaults: { _controller: "SocBundle:Price:new" }
     methods:  [GET, POST]
+
+bid_new:
+    path:     /bid/{id}/new
+    defaults: { _controller: "SocBundle:Bid:new" }
+    methods:  [GET, POST]
+
+product_buy:
+    path:     /bid/{id}/new
+    defaults: { _controller: "SocBundle:Bid:new" }
+    methods:  [GET, POST]

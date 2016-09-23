@@ -21,16 +21,23 @@
             <tr scope="row">
                 <td class="col-md-1"><a href="{{ path('product_show', { 'id': product.id }) }}">{{ product.id }}</a></td>
                 <td class="col-md-2">{{ product.title }}</td>
-                <td>{{ product.description }}</td>
+                <td class="col-md-3">{{ product.description }}</td>
                 {% if product.bid %}
-                  <td>{{ product.bid.actualPrice }}{{ product.bid.status }}</td>
+                  <td>{{ product.bid.actualPrice }}<br><br><i>{{ product.bid.status }}</i></td>
                 {% else %}
                   <td>{{ product.price }}</td>
                 {% endif %}
                 <td class="col-md-2">{{ product.user.username }}</td>
                 <td class="col-md-2"><a href="{{ path('category_show', { 'id': product.category.id }) }}">{{ product.category.title }}</a></td>
-                <td>
-                  <a href="{{ path('product_show', { 'id': product.id }) }}"><button type="btn btn-default" class="btn btn-primary alert alert-success" name="button">Show</button></a>
+                <td class="col-md-2">
+                  <a href="{{ path('product_show', { 'id': product.id }) }}"><button type="btn btn-default" class="btn btn-primary alert alert-info" name="button">Show</button></a>
+                  {% if product.bid and app.user != product.user %}
+                    {% if product.bid.status == 'bidding' %}
+                      <a href="{{ path('bid_new', { 'id': product.id }) }}"><button type="btn btn-default" class="btn btn-primary alert alert-success" name="button">Bid</button></a>
+                    {% elseif product.bid.status == 'direct buy' %}
+                      <a href="{{ path('product_buy', { 'id': product.id }) }}"><button type="btn btn-default" class="btn btn-primary alert alert-success" name="button">Buy</button></a>
+                    {% endif %}
+                  {% endif %}
                   {% if app.user == product.user or is_granted('ROLE_ADMIN') %}
                     <a href="{{ path('product_edit', { 'id': product.id }) }}"><button type="btn btn-default" class="btn btn-primary alert alert-warning" name="button">Edit</button></a>
                   {% endif %}

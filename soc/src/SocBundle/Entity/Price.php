@@ -89,6 +89,29 @@ class Price
         ->addViolation() // trigg the error
       ;
     }
+    if ($this->getStartingPrice()) {
+      if(!$this->getMinBid()) {
+        $context
+          ->buildViolation("You must set the minimum bid.")
+          ->atPath('content')
+          ->addViolation() // trigg the error
+        ;
+      }
+      if(!$this->getEndDate()) {
+        $context
+          ->buildViolation("You must set the end date.")
+          ->atPath('content')
+          ->addViolation() // trigg the error
+        ;
+      }
+      if($this->getImmediatePrice() && $this->getImmediatePrice() < $this->getStartingPrice()) {
+        $context
+          ->buildViolation("Immediate price must be higher than starting price.")
+          ->atPath('content')
+          ->addViolation() // trigg the error
+        ;
+      }
+    }
   }
 
     /**

@@ -17,7 +17,7 @@ use SocBundle\Entity\Product;
 */
 class PriceController extends Controller
 {
-  
+
   /**
   * Creates a new Price entity.
   *
@@ -39,10 +39,14 @@ class PriceController extends Controller
     $form->handleRequest($request);
 
     if ($form->isSubmitted() && $form->isValid()) {
-      if ($price->getStartingPrice())
+      if ($price->getStartingPrice()){
         $price->setActualPrice($price->getStartingPrice());
-      else
+        $price->setStatus('bidding');
+      }
+      else{
         $price->setActualPrice($price->getImmediatePrice());
+        $price->setStatus('direct buy');
+      }
       $price->setProduct($product);
       $product->setBid($price);
       $em = $this->getDoctrine()->getManager();

@@ -229,4 +229,7 @@ class Bid
         return $this;
     }
 
+    public function __construct(){
+      $this->bidDate = new \DateTime();
+  }
 }
