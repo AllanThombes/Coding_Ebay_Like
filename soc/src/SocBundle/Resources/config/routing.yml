@@ -44,3 +44,8 @@ rating_new:
     path:     /rating/{id}/{type}/new
     defaults: { _controller: "SocBundle:Rating:new" }
     methods:  [GET, POST]
+
+price_new:
+    path:     /price/{id}/new
+    defaults: { _controller: "SocBundle:Price:new" }
+    methods:  [GET, POST]

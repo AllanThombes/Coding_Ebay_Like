@@ -1,8 +1,10 @@
 {% extends 'SocBundle::layout.html.twig' %}
 
 {% block body %}
+<div class="container-fluid">
+  <div class="container-fluid col-sm-12 row">
     <h1><span class="label label-success">Product</span></h1>
-    <div class="jumbotron">
+    <div class="jumbotron col-sm-9">
     <table>
         <tbody class="table table-hover">
             <tr  scope="row">
@@ -28,11 +30,45 @@
         </tbody>
     </table>
     </div>
+    <div class="col-sm-1"></div>
+    {% if product.bid %}
+      <div class="panel panel-default col-sm-2">
+        <div class="panel-heading">Bid</div>
+        <div class="panel-body">
+          <table>
+            <tbody class="table table-hover">
+                <tr  scope="row">
+                    <th>Actual price: </th>
+                    <td>{{ product.bid.actualPrice }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Immediate price: </th>
+                    <td>{{ product.bid.immediatePrice }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Minimum bid: </th>
+                    <td>{{ product.bid.minBid }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Status: </th>
+                    <td>{{ product.bid.status }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">End date: </th>
+                    <td>{{ product.bid.endDate|date("m/d/Y", false) }}</td>
+                </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    {% endif %}
+  </div>
+  <div class="container-fluid col-sm-12 row">
     <table>
         <tbody>
           {% for rating in product.rated %}
             <tr>
-                <th>Rater: </th>
+                <th>Customer: </th>
                 <td>{{ rating.rater.username }}</td>
             </tr>
             <tr>
@@ -53,11 +89,16 @@
             {% endfor %}
         </tbody>
     </table>
-
-    <p class="col-sm-10">
+  </div>
+    <div class="container-fluid col-sm-12 row">
       {% if app.user != product.user %}
       <tr>
         <td><a href="{{ path('rating_new',{ 'id': product.id, 'type': 'product' })  }}"><button type="button" class="btn btn-default alert alert-info btn-lg">Rate this product</button></a></td>
+      </tr>
+      {% endif %}
+      {% if app.user == product.user and product.bid == null %}
+      <tr>
+        <td><a href="{{ path('price_new',{ 'id': product.id })  }}"><button type="button" class="btn btn-default alert alert-success btn-lg">Put in sell</button></a></td>
       </tr>
       {% endif %}
       <a href="{{ path('product_index') }}"><button type="button" class="btn btn-default alert alert-info btn-lg">Back to the list</button></a>
@@ -67,6 +108,6 @@
           <input type="submit" value="Delete" class="btn btn-default alert alert-danger btn-lg pull left">
       {{ form_end(delete_form) }}
     {% endif %}
-    </p>
-
+  </div>
+</div>
 {% endblock %}

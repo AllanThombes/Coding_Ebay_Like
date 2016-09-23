@@ -16,12 +16,12 @@ class PriceType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('actualPrice')
+            // ->add('actualPrice')
             ->add('immediatePrice')
             ->add('startingPrice')
             ->add('minBid')
             // ->add('endDate', 'datetime')
-            ->add('endDate', DateTimeType::class, array('date_widget' => "single_text", 'time_widget' => "single_text"));
+            ->add('endDate', DateTimeType::class, array('date_widget' => "single_text", 'time_widget' => "single_text", 'required' => false ));
     }
 
     /**

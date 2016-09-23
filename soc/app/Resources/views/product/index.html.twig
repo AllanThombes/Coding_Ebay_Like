@@ -22,7 +22,11 @@
                 <td class="col-md-1"><a href="{{ path('product_show', { 'id': product.id }) }}">{{ product.id }}</a></td>
                 <td class="col-md-2">{{ product.title }}</td>
                 <td>{{ product.description }}</td>
-                <td>{{ product.price }}</td>
+                {% if product.bid %}
+                  <td>{{ product.bid.actualPrice }}{{ product.bid.status }}</td>
+                {% else %}
+                  <td>{{ product.price }}</td>
+                {% endif %}
                 <td class="col-md-2">{{ product.user.username }}</td>
                 <td class="col-md-2"><a href="{{ path('category_show', { 'id': product.category.id }) }}">{{ product.category.title }}</a></td>
                 <td>

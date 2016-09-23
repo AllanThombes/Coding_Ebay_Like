@@ -50,6 +50,11 @@ class User extends BaseUser
     protected $products;
 
     /**
+     * @ORM\OneToMany(targetEntity="SocBundle\Entity\Bid", mappedBy="user", cascade={"remove"})
+     */
+    protected $bids;
+
+    /**
      * @ORM\OneToMany(targetEntity="SocBundle\Entity\Rating", mappedBy="rater", cascade={"remove"})
      */
     protected $ratings;

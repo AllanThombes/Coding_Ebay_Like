@@ -3,6 +3,8 @@
 namespace SocBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
  * Price
@@ -27,6 +29,11 @@ class Price
      */
      private $product;
 
+     /**
+      * @ORM\OneToMany(targetEntity="SocBundle\Entity\Bid", mappedBy="price", cascade={"remove"})
+      */
+     protected $bids;
+
     /**
      * @var float
      *
@@ -38,6 +45,7 @@ class Price
      * @var float
      *
      * @ORM\Column(name="immediatePrice", type="float", nullable=true)
+     *
      */
     private $immediatePrice;
 
@@ -69,6 +77,19 @@ class Price
      */
     private $endDate;
 
+    /**
+    * @Assert\Callback
+    */
+  public function isContentValid(ExecutionContextInterface $context)
+  {
+    if (!$this->getStartingPrice() && !$this->getImmediatePrice()) {
+      $context
+        ->buildViolation("You can't have both immediate and starting price null.")
+        ->atPath('content')
+        ->addViolation() // trigg the error
+      ;
+    }
+  }
 
     /**
      * Get id
@@ -223,4 +244,69 @@ class Price
     {
         return $this->endDate;
     }
+
+    /**
+     * Set the value of Id
+     *
+     * @param int id
+     *
+     * @return self
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of Product
+     *
+     * @return mixed
+     */
+    public function getProduct()
+    {
+        return $this->product;
+    }
+
+    /**
+     * Set the value of Product
+     *
+     * @param mixed product
+     *
+     * @return self
+     */
+    public function setProduct($product)
+    {
+        $this->product = $product;
+
+        return $this;
+    }
+
+
+    /**
+     * Get the value of Bids
+     *
+     * @return mixed
+     */
+    public function getBids()
+    {
+        return $this->bids;
+    }
+
+    /**
+     * Set the value of Bids
+     *
+     * @param mixed bids
+     *
+     * @return self
+     */
+    public function setBids($bids)
+    {
+        $this->bids = $bids;
+
+        return $this;
+    }
+
+
 }
