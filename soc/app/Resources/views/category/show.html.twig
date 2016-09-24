@@ -12,7 +12,7 @@
             <th>Title</td>
             <th>Description</td>
             <th>Seller</td>
-            <th>Price</td>
+            <!-- <th>Price</td> -->
           </tr>
           {% for product in products %}
               <tr>
@@ -20,7 +20,7 @@
                 <td><a href="{{ path('product_show', { 'id': product.id }) }}"><strong>{{ product.title }}</strong></a></td>
                 <td>{{ product.description }}</td>
                 <td>{{ product.user.username }}</td>
-                <td>{{ product.price }}</td>
+                <!-- <td>{{ product.price }}</td> -->
               </tr>
           {% endfor %}
         </table>

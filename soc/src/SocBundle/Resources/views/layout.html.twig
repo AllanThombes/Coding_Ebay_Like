@@ -46,7 +46,7 @@
         </div>
       </div>
     </header>
-    <div class="alert alert-info">
+    <div class="alert alert-info row">
             {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
                 {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |
                 <a href="{{ path('fos_user_security_logout') }}">
@@ -78,5 +78,6 @@
       {% block body %}
       {% endblock %}
     </div>
+    <footer class="footer row"><div class="container"><p class="text-muted">SOC inc. 666 Ipswitch road <br> Massachusetts, Salem 978<p></div></footer>
   </body>
 </html>

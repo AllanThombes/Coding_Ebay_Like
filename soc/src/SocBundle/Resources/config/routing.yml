@@ -56,6 +56,6 @@ bid_new:
     methods:  [GET, POST]
 
 product_buy:
-    path:     /bid/{id}/new
-    defaults: { _controller: "SocBundle:Bid:new" }
+    path:     /bid/{id}/buy
+    defaults: { _controller: "SocBundle:Bid:buy" }
     methods:  [GET, POST]

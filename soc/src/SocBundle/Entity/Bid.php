@@ -3,6 +3,8 @@
 namespace SocBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
  * Bid
@@ -60,6 +62,22 @@ class Bid
      * @ORM\JoinColumn(name="price_id", nullable=false)
      */
     protected $price;
+
+    /**
+    * @Assert\Callback
+    */
+  public function isContentValid(ExecutionContextInterface $context)
+  {
+
+    if ($this->getAutomatic() && !$this->getMaxBid()) {
+
+        $context
+          ->buildViolation("You must set a maximum bid.")
+          ->atPath('content')
+          ->addViolation() // trigg the error
+        ;
+    }
+  }
 
     /**
      * Get id

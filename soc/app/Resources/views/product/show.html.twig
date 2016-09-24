@@ -1,16 +1,19 @@
 {% extends 'SocBundle::layout.html.twig' %}
 
 {% block body %}
+{% if message is defined %}
+  <h3><span class="label label-danger text">{{ message }}</span></h3>
+{% endif %}
 <div class="container-fluid">
   <div class="container-fluid col-sm-12 row">
     <h1><span class="label label-success">Product</span></h1>
     <div class="jumbotron col-sm-9">
     <table>
         <tbody class="table table-hover">
-            <tr  scope="row">
+            <!-- <tr  scope="row">
                 <th>Id: </th>
                 <td>{{ product.id }}</td>
-            </tr>
+            </tr> -->
             <tr>
                 <th scope="row">Title: </th>
                 <td>{{ product.title }}</td>
@@ -20,8 +23,13 @@
                 <td>{{ product.description }}</td>
             </tr>
             <tr>
-                <th scope="row">Price</th>
-                <td>{{ product.price }}</td>
+                {% if product.bid %}
+                  <th>Actual price: </th>
+                  <td>{{ product.bid.actualPrice }}</td>
+                {% else %}
+                  <th scope="row">Reference price: </th>
+                  <td>{{ product.price }}</td>
+                {% endif %}
             </tr>
             <tr>
                 <th scope="row">Category</th>

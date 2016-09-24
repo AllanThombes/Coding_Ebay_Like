@@ -10,6 +10,7 @@ use SocBundle\Entity\Bid;
 use SocBundle\Form\BidType;
 use SocBundle\Entity\Price;
 use SocBundle\Entity\Product;
+use Symfony\Component\Validator\Constraints\Date;
 
 
 /**
@@ -44,19 +45,49 @@ class BidController extends Controller
      */
     public function newAction(Request $request, Product $product)
     {
+        //must be log in to bid
+        if (!$this->getUser())
+          return $this->redirectToRoute('fos_user_security_login');
         $bid = new Bid();
+        $price = $product->getBid();
         $form = $this->createForm('SocBundle\Form\BidType', $bid);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $bid->setPrice($product->getBid());
+          //bid must be at less equal to last price + min bid
+          $minprice = ($price->getactualPrice() + $price->getMinBid());
+          if ($bid->getAmount() < $minprice) {
+              $message = "Your bid is not high enough, must be at least: ".$minprice;
+              return $this->render('bid/new.html.twig', array(
+                  'bid' => $bid,
+                  'form' => $form->createView(),
+                  'message'=> $message
+              ));
+          }
+          $em = $this->getDoctrine()->getManager();
+          $date = new \DateTime();
+          //if price date is over bid is cancelled
+          if ($date > $price->getEndDate() ) {
+            //if there are bids the product is sold
+            if ($price->getBid())
+              $price->setStatus('Sold');
+            else
+              //no bids the sold is closed
+              $price->setStatus('Closed');
+            $em->persist($price);
+            $em->flush();
+            $message = "Too late, bid are closed";
+            return $this->redirectToRoute('product_show', array('id' => $product->getId(), 'message' => $message));
+          }
+          //everything is ok, bid is registered
+            $bid->setPrice($price);
             $bid->setUser($this->getUser());
-            // $bid->setBidDate(new Date());
+            $price->setActualPrice($bid->getAmount());
+            $em->persist($price);
             $em->persist($bid);
             $em->flush();
 
-            return $this->redirectToRoute('bid_show', array('id' => $bid->getId()));
+            return $this->redirectToRoute('product_show', array('id' => $product->getId()));
         }
 
         return $this->render('bid/new.html.twig', array(

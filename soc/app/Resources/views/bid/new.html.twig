@@ -1,8 +1,11 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Bid creation</h1>
-
+    <h1><span class="label label-info">Bid creation</span></h1>
+    {% if message is defined %}
+      <h3><span class="label label-danger text">{{ message }}</span></h3>
+    {% endif %}
+    {% form_theme form 'bootstrap_3_horizontal_layout.html.twig' %}
     {{ form_start(form) }}
         {{ form_widget(form) }}
         <input type="submit" value="Create" />

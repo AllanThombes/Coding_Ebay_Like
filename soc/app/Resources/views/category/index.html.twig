@@ -6,7 +6,7 @@
     <table  class="table table-bordered table-striped">
         <thead>
             <tr scope="row" class="alert-info">
-                <th>Id</th>
+                <!-- <th>Id</th> -->
                 <th>Title</th>
                 <th>Actions</th>
             </tr>
@@ -14,8 +14,8 @@
         <tbody>
         {% for category in categories %}
             <tr scope="row">
-                <td class="col-md-1"><a href="{{ path('category_show', { 'id': category.id }) }}">{{ category.id }}</a></td>
-                <td class="col-md-5">{{ category.title }}</td>
+                <!-- <td class="col-md-1"><a href="{{ path('category_show', { 'id': category.id }) }}">{{ category.id }}</a></td> -->
+                <td class="col-md-5"><a href="{{ path('category_show', { 'id': category.id }) }}">{{ category.title }}</a></td>
                 <td class="col-md-2">
                     <a href="{{ path('category_show', { 'id': category.id }) }}"><button type="btn btn-default" class="btn btn-primary alert alert-success" name="button">Show</button></a>
                     {% if is_granted('ROLE_ADMIN') %}

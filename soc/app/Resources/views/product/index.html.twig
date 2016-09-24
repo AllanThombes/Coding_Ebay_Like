@@ -6,7 +6,7 @@
     <table class="table table-bordered table-striped">
         <thead>
             <tr scope="row" class="alert-info">
-                <th>Id  <span class="glyphicon glyphicon-search"></span></th>
+                <!-- <th>Id  <span class="glyphicon glyphicon-search"></span></th> -->
                 <th>Title <span class="glyphicon glyphicon-tags"></span></th>
                 <th>Description  <span class="glyphicon glyphicon-th-list"></span></th>
                 <th>Price <span class="glyphicon glyphicon-usd"></span></th>
@@ -18,14 +18,15 @@
         </thead>
         <tbody>
         {% for product in products %}
+          {% if ((product.bid and (product.bid.status != "Sold") and (product.bid.status != "Closed") and (product.bid.status != "Cancelled")) or product.bid == null) %}
             <tr scope="row">
-                <td class="col-md-1"><a href="{{ path('product_show', { 'id': product.id }) }}">{{ product.id }}</a></td>
-                <td class="col-md-2">{{ product.title }}</td>
+                <!-- <td class="col-md-1"><a href="{{ path('product_show', { 'id': product.id }) }}">{{ product.id }}</a></td> -->
+                <td class="col-md-2"><a href="{{ path('product_show', { 'id': product.id }) }}">{{ product.title }}</a></td>
                 <td class="col-md-3">{{ product.description }}</td>
                 {% if product.bid %}
                   <td>{{ product.bid.actualPrice }}<br><br><i>{{ product.bid.status }}</i></td>
                 {% else %}
-                  <td>{{ product.price }}</td>
+                  <td>{{ product.price }}<br><br><i>(for reference)</i></td>
                 {% endif %}
                 <td class="col-md-2">{{ product.user.username }}</td>
                 <td class="col-md-2"><a href="{{ path('category_show', { 'id': product.category.id }) }}">{{ product.category.title }}</a></td>
@@ -44,6 +45,7 @@
                 </td>
                 <td class="col-md-1">{{product.rated.count}}</td>
             </tr>
+          {% endif %}
         {% endfor %}
         </tbody>
     </table>
