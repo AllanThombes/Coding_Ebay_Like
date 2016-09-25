@@ -49,10 +49,16 @@ class ProductController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $user = $this->container->get('security.token_storage')->getToken()->getUser();
             $product->setUser($user);
-            var_dump($_POST['category']['parentCateg']);
-            $categ = $em->getRepository('SocBundle:Category')->findByTitle($_POST['category']['parentCateg']);
-            $product->setCategory($categ[0]);
-            $em = $this->getDoctrine()->getManager();
+            $categ = $em->getRepository('SocBundle:Category')->findByTitle($_POST['parentCateg']);
+            if ($categ)
+              $product->setCategory($categ[0]);
+            else
+              return $this->render('product/new.html.twig', array('product' => $product,
+                  'categories' => $categories,
+                  'form' => $form->createView(),
+                  'message' => 'Must select an existant category'
+              ));
+              $em = $this->getDoctrine()->getManager();
             $em->persist($product);
             $em->flush();
 

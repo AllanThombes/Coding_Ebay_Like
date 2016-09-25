@@ -2,6 +2,9 @@
 
 {% block body %}
     <h1><span class="label label-success">Product creation</span></h1>
+    {% if message is defined %}
+      <h3><span class="label label-danger text">{{ message }}</span></h3>
+    {% endif %}
     {% form_theme form 'bootstrap_3_horizontal_layout.html.twig' %}
     {{ form_start(form) }}
         {{ form_widget(form) }}
@@ -11,7 +14,7 @@
           {% endfor %}
         </select> -->
         <label for="category">Category: </label>
-        <input  id ='category' name="parentCateg"/><br>
+        <input  id ='category' name="parentCateg" required/><br>
         <input type="submit" value="Create" />
     {{ form_end(form) }}
     <p>

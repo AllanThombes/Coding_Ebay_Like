@@ -38,6 +38,36 @@ class BidController extends Controller
     }
 
     /**
+     * Creates a direct buy
+     *
+     * @Route("/new", name="product_buy")
+     * @Method({"GET", "POST"})
+     */
+    public function buyAction(Request $request, Product $product)
+    {
+        //must be log in to buy
+        if (!$this->getUser())
+          return $this->redirectToRoute('fos_user_security_login');
+        $bid = new Bid();
+        $price = $product->getBid();
+        //if it's not a direct buy we get back to product's List
+        if ($price->getStatus() != "direct buy")
+          return $this->redirectToRoute('product_index');
+          $em = $this->getDoctrine()->getManager();
+          $date = new \DateTime();
+          //everything is ok, bid is registered
+          $bid->setPrice($price);
+          $bid->setUser($this->getUser());
+          $bid->setAmount($price->getImmediatePrice());
+          $bid->setAutomatic(false);
+          $price->setStatus('Sold');
+          $em->persist($price);
+          $em->persist($bid);
+          $em->flush();
+            return $this->redirectToRoute('product_show', array('id' => $product->getId()));
+    }
+
+    /**
      * Creates a new Bid entity.
      *
      * @Route("/new", name="bid_new")
@@ -50,6 +80,9 @@ class BidController extends Controller
           return $this->redirectToRoute('fos_user_security_login');
         $bid = new Bid();
         $price = $product->getBid();
+        //if it's not a bidding we get back to product's List
+        if ($price->getStatus() != "bidding")
+          return $this->redirectToRoute('product_index');
         $form = $this->createForm('SocBundle\Form\BidType', $bid);
         $form->handleRequest($request);
 
@@ -69,7 +102,7 @@ class BidController extends Controller
           //if price date is over bid is cancelled
           if ($date > $price->getEndDate() ) {
             //if there are bids the product is sold
-            if ($price->getBid())
+            if ($price->getBids())
               $price->setStatus('Sold');
             else
               //no bids the sold is closed
@@ -83,9 +116,15 @@ class BidController extends Controller
             $bid->setPrice($price);
             $bid->setUser($this->getUser());
             $price->setActualPrice($bid->getAmount());
+            //if immediate price is reach, product is Sold
+            if (($price->getImmediatePrice() > 0) && $price->getActualPrice() >= $price->getImmediatePrice())
+              $price->setStatus('Sold');
             $em->persist($price);
             $em->persist($bid);
             $em->flush();
+
+          //we call the function that chek if there is automatic bid
+          $this->checkAutomatic($bid, $price);
 
             return $this->redirectToRoute('product_show', array('id' => $product->getId()));
         }
@@ -94,6 +133,50 @@ class BidController extends Controller
             'bid' => $bid,
             'form' => $form->createView(),
         ));
+    }
+
+    //Check if there is other automatic bid and place a bid if so
+    //then it call itself until ther is no more to place
+    public function checkAutomatic(Bid $lastBid, Price $price) {
+        $em = $this->getDoctrine()->getManager();
+        $autoBidTemp = $em->getRepository('SocBundle:Bid')->findBy(array('price' => $price,'automatic' => true), array( 'bidDate' => 'DESC'));
+        //if the first result is the one we just place we check next one
+        if ($autoBidTemp[0] == $lastBid)
+          $autoBid = $autoBidTemp[1];
+        else
+          $autoBid = $autoBidTemp[0];
+        //if we found an autobid (which is not current one) and if its max is greater than actual price + min bid
+        //we place a bid by increasing with min bid
+        if ($autoBid && $autoBid->getMaxBid() >= ($price->getActualPrice() + $price->getMinBid()) && $price->getStatus() != 'Sold') {
+          $newAutoBid = new Bid();
+          $newAutoBid->setAmount($price->getActualPrice() + $price->getMinBid());
+          $newAutoBid->setAutomatic(true);
+          $newAutoBid->setMaxBid($autoBid->getMaxBid());
+          $newAutoBid->setPrice($price);
+          $newAutoBid->setUser($autoBid->getUser());
+          //Check date before finalize transaction
+          $date = new \DateTime();
+          if ($date > $price->getEndDate() ) {
+            if ($price->getBid()) {
+              $price->setStatus('Sold');
+              $em->persist($price);
+              $em->flush();
+              return $this->redirectToRoute('product_show', array('id' => $price->getProduct()->getId()));
+            }
+          }
+          $price->setActualPrice($newAutoBid->getAmount());
+          //if immediate price is reach, product is Sold
+          if (($price->getImmediatePrice() > 0) && ($price->getActualPrice() >= $price->getImmediatePrice())) {
+            $price->setStatus('Sold');
+          }
+          $em->persist($newAutoBid);
+          $em->persist($price);
+          $em->flush();
+          //if the last bid placed before is automatic we must chain bid placement
+          if ($lastBid->getAutomatic())
+            $this->checkAutomatic($newAutoBid, $price);
+        }
+
     }
 
     /**
